@@ -1,70 +1,76 @@
 <?php
-
-//FUNZIONE CHE GENERA UN NUMERO CASUALE COMPRESO TRA 0 ED IL NUMERO INSERITO
-function randomNumber ($min, $max){
-    return rand ($min, $max);
-}
-
-//FUNZIONE CHE GENERA LA PASSWORD
-    function= generatePassword ($lenght){
-        $result = "";   //Variabile messaggi di errore
-        $password = ""; //variabile contenente password
-        $numbers ='0123456789';
-        $letters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMN0PORSTUVWXYZ';
-        $symbols = '!@#$8^8* () '; I
-
-    //CASUALMENTE PRENDI DATI DA TUTTE E TRE LE STRINGHE
-
-    $basedString = $letters.$numbers.$symbols
-
-    //validità lunghezza 
-    if (empty ($length) ) {
-        $result = 'Inserisci dei parametri';
+    include __DIR__.'/functions.php';
+    /*function randomNumber($min, $max){
+        return rand($min, $max);
     }
-         else if ($length < 8 || §length > 32) {
-            $result = 'lunghezza della pasword non corretta';
-    }
-        else {
-            //ciclo password da generare
-            while(strlen($password) < $lenght) {
 
-            }
+    function generatePassword($length){
+        $result = '';
+        $password = '';
+        $numbers = '0123456789';
+        $letters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $symbols = '!@#$%^&*()';
+
+        $baseString = $letters.$numbers.$symbols;
+
+        if(empty($length)){
+            $result = 'Nessun parametro valido inserito';
         }
-    if(isset($_GET['lenght'])){
-        $response = generatePassword ($_GET ['lenght']);
-     }
+        else if($length < 8 || $length > 32){
+            $result = 'Attenzione, la lunghezza della password deve essere compresa tra 8 e 32 caratteri';
+        }
+        else{
+            while(strlen($password) < $length){
+                $index = randomNumber(0, strlen($baseString) - 1);
+                $char = $baseString[$index];
+                $password.=$char;
+            }
+            return $password;
+        }
+        return $result;
+    }*/
+
+    if(isset($_GET['length'])){
+        $response = generatePassword($_GET['length']);
     }
-
 ?>
-
-
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-    <title>Document</title>
-</head>
-<body>
-    <div class= "container mt-5">
-        <div class="row">
-            <div class="col-12 col-md-8 offset-md-3">
-                <form action="index.php" method= "GET">
-                    <div class="row">
-                        <div class="col-12 col-md-6">
-                            <label for="lenght" class="control-label">Lunghezza</label>
-                            <input type="number" id="lenght" name="lenght" placeholder="lunghezza" class="form-control">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!--bootstrap--> <!--controllare link non funzionante-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+        <link rel="stylesheet" href="./style/style.css">
+        <title>Password generator</title>
+    </head>
+    <body>
+        <div class="container mt-5">
+            <h1 class="text-center">Strong Password Generator</h1>
+            <h2 class="text-center">Genera una password sicura</h2>
+            <?php if(isset($response)){ ?>
+                <div class="alert alert-info">
+                    <?php echo $response; ?> 
+                </div>
+            <?php } ?>
+            <div class="row">
+                <div class="col-12">
+                    <form action="index.php" method="GET">
+                        <div class="row">
+                            <div class="col-2 d-flex align-items-center">
+                                <label for="length" class="control-label mt-4">Lunghezza password:</label>
+                            </div>
+                            <div class="col-10">
+                                <input type="number" id="length" name="length" placeholder="Lunghezza" class="form-control mt-4">
+                            </div>
+                            </div>
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-primary float-start mt-4 mb-4">Invia</button>
+                            </div>
                         </div>
-                        <div class="col-12 col-md-6">
-                            <button tipe="submit" class="btn btn-success float-end mt-4">Invia</button>
-                        </div>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
-    
-</body>
+    </body>
 </html>
